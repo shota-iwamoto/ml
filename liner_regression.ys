@@ -1,0 +1,66 @@
+def mean(xs: list[float]) -> float:
+    total: float = 0.0
+
+    for x in xs:
+        total = total + x
+
+    return total / float(len(xs))
+
+
+def linear_regression(x: list[float], y: list[float]) -> list[float]:
+    x_mean: float = mean(x)
+    y_mean: float = mean(y)
+
+    numerator:   float = 0.0
+    denominator: float = 0.0
+
+    for i in range(0, len(x)):
+        dx: float = x[i] - x_mean
+        dy: float = y[i] - y_mean
+
+        numerator   = numerator + dx * dy
+        denominator = denominator + dx * dx
+
+    a: float = numerator / denominator
+    b: float = y_mean - a * x_mean
+
+    return [a, b]
+
+
+def predict(x: float, model: list[float]) -> float:
+    a: float = model[0]
+    b: float = model[1]
+
+    return a * x + b
+
+
+def main() -> int:
+    x: list[float] = [
+        1.0,
+        2.0,
+        3.0,
+        4.0,
+        5.0
+    ]
+
+    y: list[float] = [
+        3.0,
+        5.0,
+        7.0,
+        9.0,
+        11.0
+    ]
+
+    model: list[float] = linear_regression(x, y)
+
+    a: float = model[0]
+    b: float = model[1]
+
+    print("a = " + str(a))
+    print("b = " + str(b))
+
+    prediction: float = predict(6.0, model)
+
+    print("prediction = " + str(prediction))
+
+    return 0
